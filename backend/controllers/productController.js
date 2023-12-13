@@ -154,6 +154,15 @@ const fetchSimilarProducts = async (req, res) => {
   }
 };
 
+const updateQuantity = async (req, res) => {
+  try {
+    const updated = await Product.findByIdAndUpdate(req.params.productId, { quantity: req.body.modifiedQuanity }, { new: true })
+    res.json(updated)
+  } catch (error) {
+    res.json({error: error})
+  }
+}
+
 
 module.exports = {
   uploadProductImages,
@@ -164,4 +173,5 @@ module.exports = {
   updateProduct,
   searchProducts,
   fetchSimilarProducts,
+  updateQuantity
 };

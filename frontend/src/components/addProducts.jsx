@@ -13,7 +13,6 @@ const AddProducts = () => {
     description: "",
     price: 0,
     quantity: 1,
-    stock: true,
     images: [],
     freeShipping: true,
     shippingPrice: 0,
@@ -38,7 +37,7 @@ const AddProducts = () => {
     ) {
       setproductData({ ...productData, [e.target.name]: e.target.value });
     }
-    if ([e.target.name] == "stock" || [e.target.name] == "freeShipping") {
+    if ([e.target.name] == "freeShipping") {
       setproductData({ ...productData, [e.target.name]: e.target.checked });
     }
     if (e.target.name === "images") {
@@ -192,19 +191,6 @@ const AddProducts = () => {
               onChange={handleChange}
             />
             <p>Quantity</p>
-          </div>
-          <div className=" flex gap-4">
-            <p>In stock: </p>
-            <div className=" flex gap-1">
-              <label htmlFor="instock">Yes</label>
-              <input
-                checked={productData.stock}
-                type="checkbox"
-                name="stock"
-                id="instock"
-                onChange={handleChange}
-              />
-            </div>
           </div>
           <div className=" flex gap-4">
             <p>Delivery: </p>

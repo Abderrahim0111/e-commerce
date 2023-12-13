@@ -60,7 +60,7 @@ const Home = () => {
           <CategoryItem
             category="tvs"
             handleCategory={handleCategory}
-            imageURL="https://www.pngall.com/wp-content/uploads/5/Samsung-TV-PNG.png"
+            imageURL="https://www.pngmart.com/files/1/Haier-TV-PNG.png"
             categoryName="tvs"
           />
           <CategoryItem

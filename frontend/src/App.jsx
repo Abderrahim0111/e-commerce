@@ -13,6 +13,7 @@ import EditProduct from "./pages/editProduct";
 import Search from "./pages/search";
 import Order from "./pages/order";
 import Myorders from "./pages/myorders";
+import View from "./pages/view";
 
 function App() {
   const { currentUser } = useSelector((state) => state.user);
@@ -28,6 +29,7 @@ function App() {
         <Route path="/admin/edit/:productId" element={<EditProduct />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
+        <Route path="/view/:orderId" element={<View />} />
         <Route path="/myorders" element={<Myorders />} />
         <Route path="/product/:productId" element={<Product />} />
         <Route path="/login" element={<Login {...{ currentUser }} />} />

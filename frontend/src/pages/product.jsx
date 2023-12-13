@@ -196,17 +196,21 @@ const Product = () => {
                 />
               </div>
             ) : (
-              <button
-                onClick={() => {
-                  dispatch(addToCart(product));
-                }}
-                disabled={!product.stock}
-                type="button"
-                className=" rounded-lg disabled:cursor-not-allowed disabled:opacity-90 hover:opacity-90 flex items-center gap-2 p-2 bg-slate-700 text-white justify-center"
-              >
-                <span>Add to cart </span>
-                <i className="fa-solid fa-cart-shopping" />
-              </button>
+              <div className=" flex gap-2 items-center">
+                <button
+                  onClick={() => {
+                    dispatch(addToCart(product));
+                  }}
+                  disabled={product.quantity <= 0}
+                  type="button"
+                  className=" rounded-lg disabled:cursor-not-allowed disabled:opacity-90 hover:opacity-90 flex items-center gap-2 p-2 bg-slate-700 text-white justify-center"
+                >
+                  <span>Add to cart </span>
+                  <i className="fa-solid fa-cart-shopping" />
+                </button>
+                { product.quantity <= 0 && <p className=" text-red-600 font-semibold">Out of stock</p>}
+              </div>
+
             )}
           </div>
         </div>

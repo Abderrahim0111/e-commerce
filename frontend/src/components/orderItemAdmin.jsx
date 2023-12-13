@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Loading from "./loading";
-
+import { useNavigate } from "react-router-dom";
 const OrderItemAdmin = ({ order }) => {
   const [loading, setloading] = useState(false);
   const [status, setstatus] = useState("");
+  const navigate = useNavigate();
   let productsName = [];
   let subtotal = 0;
   let shipping = 0;
@@ -26,13 +27,28 @@ const OrderItemAdmin = ({ order }) => {
     const res = await fetch(`/api/updateOrder/${order._id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json", // Specify content type as JSON
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ status }),
     });
     const data = await res.json();
     if (data.error) {
       return console.log(data.error);
+    }
+    if (data.status === "delivred") {
+      data.products.map(async (product) => {
+        const productQuantity = product.product.quantity;
+        const modifiedQuanity = productQuantity - product.quantity;
+        const res2 = await fetch(`/api/updateQuantity/${product.product._id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ modifiedQuanity }),
+        });
+        const data2 = await res2.json();
+        return console.log(data2);
+      });
     }
   };
   const handleDelete = async (orderId) => {
@@ -55,15 +71,22 @@ const OrderItemAdmin = ({ order }) => {
   };
   return (
     <tbody className="bg-white divide-y divide-gray-200">
-      <tr className={`bg-white ${order.status === 'delivred'? 'bg-green-100': ''}`}>
+      <tr
+        className={`bg-white ${
+          order.status === "delivred" ? "bg-green-200" : ""
+        }`}
+      >
         <td className="  px-6 py-4 whitespace-no-wrap capitalize">
           {order.user.username}
         </td>
         <td className="px-6 py-4 whitespace-no-wrap">
           {productsName.map((productName, index) => (
             <p key={index} className=" flex gap-1">
-            <span className=" w-40 line-clamp-1">{productName.productname}</span> <span>(x{productName.quantity})</span>
-          </p>
+              <span className=" w-40 line-clamp-1">
+                {productName.productname}
+              </span>{" "}
+              <span>(x{productName.quantity})</span>
+            </p>
           ))}
         </td>
         <td className=" px-6 py-4 whitespace-no-wrap">
@@ -87,7 +110,11 @@ const OrderItemAdmin = ({ order }) => {
           {order.address + ", " + order.city}
         </td>
         <td className="px-6 py-4 whitespace-no-wrap">
-          <select className=" bg-transparent" name="status" onChange={handleChange}>
+          <select
+            className=" bg-transparent"
+            name="status"
+            onChange={handleChange}
+          >
             <option value="" selected hidden>
               {order.status}
             </option>
@@ -96,7 +123,21 @@ const OrderItemAdmin = ({ order }) => {
             <option value="delivred">Delivred</option>
           </select>
         </td>
-        <td className="px-6 py-4 whitespace-no-wrap flex flex-col">
+        <td className="px-6 py-4 whitespace-no-wrap flex gap-4">
+          <button
+            className=" hover:scale-105 transition-all duration-500 uppercase text-blue-600"
+            onClick={() => {
+              navigate(`/view/${order._id}`);
+            }}
+          >
+            <i className="fa-solid fa-eye" />
+          </button>
+          <button
+            className=" hover:scale-105 transition-all duration-500 uppercase text-green-600"
+            onClick={handleUpdate}
+          >
+            <i className="fa-solid fa-pen-to-square" />
+          </button>
           <button
             onClick={() => {
               handleDelete(order._id);
@@ -106,11 +147,8 @@ const OrderItemAdmin = ({ order }) => {
             {loading ? (
               <Loading color={"red"} height={24} width={24} />
             ) : (
-              "delete"
+              <i className="fa-solid fa-trash" />
             )}
-          </button>
-          <button className=" hover:scale-105 transition-all duration-500 uppercase text-blue-600" onClick={handleUpdate}>
-            update
           </button>
         </td>
       </tr>

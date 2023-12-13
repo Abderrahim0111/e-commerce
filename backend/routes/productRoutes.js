@@ -8,6 +8,7 @@ const {
   updateProduct,
   searchProducts,
   fetchSimilarProducts,
+  updateQuantity
 } = require("../controllers/productController");
 const router = express.Router();
 const multer = require("multer");
@@ -25,5 +26,6 @@ router.get("/fetchSimilarProducts/:productId", fetchSimilarProducts);
 router.delete("/deleteProduct/:productId", deleteProduct);
 router.put("/updateProduct/:productId", updateProduct);
 router.get("/searchProducts", searchProducts);
+router.put('/updateQuantity/:productId', updateQuantity)
 
 module.exports = router;

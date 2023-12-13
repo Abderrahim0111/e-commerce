@@ -1,19 +1,20 @@
-
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, decreseQuantity, increseQuantity } from "../redux/productSlice";
+import {
+  addToCart,
+  decreseQuantity,
+  increseQuantity,
+} from "../redux/productSlice";
 import { Link } from "react-router-dom";
 
 const ProductItem = ({ product }) => {
-  const {products, productsId} = useSelector((state) => state.product)
-  const dispatch = useDispatch()
+  const { products, productsId } = useSelector((state) => state.product);
+  const dispatch = useDispatch();
   const selectedQuantity = () => {
     const filtredProducts = products.find((productR) => {
-      return(
-        productR._id == product._id
-      )
-    })
-    return filtredProducts.selectedQuantity
-  }
+      return productR._id == product._id;
+    });
+    return filtredProducts.selectedQuantity;
+  };
   return (
     <div className="bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]">
       <Link to={`/product/${product._id}`}>
@@ -29,8 +30,9 @@ const ProductItem = ({ product }) => {
           <p className="text-sm text-gray-600 line-clamp-2">
             {product.description}
           </p>
-          {product.stock && <p className=" text-green-700 text-sm">In stock</p>}
-          {!product.stock && (
+          {product.quantity > 0 ? (
+            <p className=" text-green-700 text-sm">In stock</p>
+          ) : (
             <p className=" text-red-700 text-sm">Out of stock</p>
           )}
         </div>
@@ -38,22 +40,28 @@ const ProductItem = ({ product }) => {
       <div className=" flex items-center justify-between">
         {productsId.includes(product._id) ? (
           <div className=" m-2 flex gap-2 items-center justify-center">
-            <i onClick={() => {
-              dispatch(decreseQuantity(product))
-            }} className=" hover:cursor-pointer hover:opacity-90 fa-solid fa-minus" />
+            <i
+              onClick={() => {
+                dispatch(decreseQuantity(product));
+              }}
+              className=" hover:cursor-pointer hover:opacity-90 fa-solid fa-minus"
+            />
             <span className=" p-2 bg-slate-700 text-white rounded-full h-7 w-7 flex items-center justify-center">
               {selectedQuantity()}
             </span>
-            <i onClick={() => {
-              dispatch(increseQuantity(product))
-            }} className=" hover:cursor-pointer hover:opacity-90 fa-solid fa-plus" />
+            <i
+              onClick={() => {
+                dispatch(increseQuantity(product));
+              }}
+              className=" hover:cursor-pointer hover:opacity-90 fa-solid fa-plus"
+            />
           </div>
         ) : (
           <button
             onClick={() => {
-              dispatch(addToCart(product))
+              dispatch(addToCart(product));
             }}
-            disabled={!product.stock}
+            disabled={product.quantity <= 0}
             type="button"
             className=" transition-all duration-300 m-2 rounded-lg disabled:cursor-not-allowed disabled:opacity-90 hover:opacity-90 flex items-center gap-2 p-2 bg-slate-700 text-white justify-center"
           >
@@ -61,7 +69,9 @@ const ProductItem = ({ product }) => {
             <i className="fa-solid fa-cart-shopping" />
           </button>
         )}
-        <span className=" text-red-600 font-semibold m-2">{product.price.toLocaleString('en-US')} MAD</span>
+        <span className=" text-red-600 font-semibold m-2">
+          {product.price.toLocaleString("en-US")} MAD
+        </span>
       </div>
     </div>
   );

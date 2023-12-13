@@ -62,10 +62,10 @@ const ManageProducts = () => {
               <p className=" hidden sm:block">{product.price} DH</p>
               {product.freeShipping && <p className=" hidden sm:block">Free shipping</p>}
               {!product.freeShipping && <p className=" hidden sm:block">Shipping ({product.shippingPrice} DH)</p>}
-              {product.stock && (
+              {product.quantity > 0 ? (
                 <p className=" text-green-700">{`In stock (${product.quantity})`}</p>
-              )}
-              {!product.stock && <p className=" text-red-700">Out of stock</p>}
+              )
+              : <p className=" text-red-700">Out of stock</p>}
 
               <div className=" flex gap-6">
                 <Link to={`/admin/edit/${product._id}`}>

@@ -38,8 +38,7 @@ const OrderItem = ({ order }) => {
   };
   return (
     <tbody className="bg-white divide-y divide-gray-200">
-      <tr className={`bg-white ${order.status === 'delivred'? 'bg-green-100': ''}`}>
-        <td className=" hidden lg:table-cell px-6 py-4 whitespace-no-wrap">{order._id}</td>
+      <tr className={`bg-white ${order.status === 'delivred'? 'bg-green-200': ''}`}>
         <td className="px-6 py-4 whitespace-no-wrap">
           {productsName.map((productName, index) => (
             <p key={index} className=" flex gap-1">
@@ -72,7 +71,7 @@ const OrderItem = ({ order }) => {
             onClick={() => {
               handleDelete(order._id);
             }}
-            className=" uppercase text-red-700"
+            className=" hover:scale-105 duration-300  transition-all uppercase text-red-700"
           >
             { loading? <Loading color={"red"} height={24} width={24}/> : "delete"}
           </button>

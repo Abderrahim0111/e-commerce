@@ -54,11 +54,20 @@ const fetchAllOrders = async (req, res) => {
 
 const updateOrder =  async (req, res) => {
   try {
-    const updated = await Order.findByIdAndUpdate(req.params.orderId, req.body, {new: true})
+    const updated = await Order.findByIdAndUpdate(req.params.orderId, req.body, {new: true}).populate("products.product")
     if(!updated){
       return res.json({error: 'update error'})
     }
-    res.json({message: 'updated'})
+    res.json(updated)
+  } catch (error) {
+    res.json({error: error})
+  }
+}
+
+const fetchOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.orderId).populate("products.product").populate('user')
+    res.json(order)
   } catch (error) {
     res.json({error: error})
   }
@@ -69,5 +78,6 @@ module.exports = {
   fetchUserOrders,
   deleteUserOrder,
   fetchAllOrders,
-  updateOrder
+  updateOrder,
+  fetchOrder
 };

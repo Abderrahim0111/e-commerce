@@ -54,7 +54,7 @@ const EditProduct = () => {
     ) {
       setproductData({ ...productData, [e.target.name]: e.target.value });
     }
-    if ([e.target.name] == "stock" || [e.target.name] == "freeShipping") {
+    if ([e.target.name] == "freeShipping") {
       setproductData({ ...productData, [e.target.name]: e.target.checked });
     }
     if (e.target.name === "images") {
@@ -209,19 +209,6 @@ const EditProduct = () => {
             <p>Quantity</p>
           </div>
           <div className=" flex gap-4">
-            <p>In stock: </p>
-            <div className=" flex gap-1">
-              <label htmlFor="instock">Yes</label>
-              <input
-                type="checkbox"
-                name="stock"
-                id="instock"
-                onChange={handleChange}
-                checked={productData.stock}
-              />
-            </div>
-          </div>
-          <div className=" flex gap-4">
             <p>Delivery: </p>
             <div className=" flex gap-1">
               <label htmlFor="free">Free</label>
@@ -273,7 +260,7 @@ const EditProduct = () => {
               }}
               disabled={filesUploaded || loadingU}
               type="button"
-              className=" disabled:opacity-90 disabled:hover:shadow-none disabled:cursor-not-allowed p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg"
+              className=" transition-all duration-300 disabled:opacity-90 disabled:hover:shadow-none disabled:cursor-not-allowed p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg"
             >
               {loadingU ? (
                 <Loading
@@ -323,7 +310,7 @@ const EditProduct = () => {
       </div>
       <button
         disabled={loadingC || loadingU}
-        className=" disabled:cursor-not-allowed flex justify-center p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95"
+        className=" duration-300 transition-all disabled:cursor-not-allowed flex justify-center p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-90"
       >
         {loadingC ? (
           <Loading color={"white"} height={20} width={20} />
