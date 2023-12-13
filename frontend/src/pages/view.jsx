@@ -73,17 +73,16 @@ const View = () => {
             <p className="font-semibold text-gray-800">
               {product.product.title} (x{product.quantity})
             </p>
-            <p className="ml-4 text-gray-700">Price: {product.product.price * product.quantity}</p>
+            <p className="ml-4 text-gray-700">Price: {(product.product.price * product.quantity).toLocaleString("en-US")} DH</p>
             <p className="ml-4 text-gray-700">
-              Shipping: {product.product.shippingPrice}
+              Shipping: {(product.product.shippingPrice).toLocaleString("en-US")} DH
             </p>
           </li>
         ))}
       </ul>
       <p className="font-semibold text-xl text-blue-700">
         Total:{" "}
-        {subtotal +
-          (productsNumber === 0 ? shipping : shipping / productsNumber)}
+        {(subtotal + (productsNumber === 0 ? shipping : shipping / productsNumber)).toLocaleString("en-US")} DH
       </p>
     </div>
   );
