@@ -28,9 +28,11 @@ const SelectedProduct = ({ product }) => {
         </span>
         <i
           onClick={() => {
+            if(product.selectedQuantity < product.quantity){
             dispatch(increseQuantity(product));
+            }
           }}
-          className=" hover:cursor-pointer hover:opacity-90 fa-solid fa-plus"
+          className={` hover:cursor-pointer hover:opacity-90 fa-solid fa-plus ${product.selectedQuantity >= product.quantity ? 'hidden' : ''}`}
         />
       </div>
       <p className=" text-red-700">{(product.selectedQuantity*product.price).toLocaleString('en-US')} DH</p>

@@ -36,7 +36,7 @@ const Admin = () => {
   return (
     <div>
       <div className="shadow-md">
-        <ul className=" flex justify-center gap-10">
+        <ul className="flex flex-col text-center md:flex-row md:justify-center md:gap-10">
           <li
             onClick={() => {
               setisAddProducts(false);

@@ -51,9 +51,13 @@ const ProductItem = ({ product }) => {
             </span>
             <i
               onClick={() => {
-                dispatch(increseQuantity(product));
+                if(selectedQuantity() < product.quantity){
+                  console.log(selectedQuantity())
+                  console.log(product.quantity)
+                  dispatch(increseQuantity(product));
+                }
               }}
-              className=" hover:cursor-pointer hover:opacity-90 fa-solid fa-plus"
+              className={` hover:cursor-pointer hover:opacity-90 fa-solid fa-plus ${selectedQuantity() >= product.quantity ? 'hidden' : ''}`}
             />
           </div>
         ) : (
