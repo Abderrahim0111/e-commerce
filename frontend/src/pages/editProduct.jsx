@@ -69,7 +69,7 @@ const EditProduct = () => {
   const handleSubmit = async (e) => {
     setloadingC(true);
     e.preventDefault();
-    if (filesUploaded && productData.images.length > 0 ) {
+    if ( productData.images.length > 0 ) {
       try {
         const res = await fetch(`/api/updateProduct/${productId}`, {
           method: "PUT",
@@ -101,8 +101,7 @@ const EditProduct = () => {
             const res = await fetch(`/api/fetchProduct/${productId}`)
             const data = await res.json()
             if(data.error){
-                setloading(false)
-                return console.log(data.error)
+                return
             }
             setloading(false)
             setproductData(data)

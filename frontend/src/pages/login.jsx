@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import { loginSuccess } from "../redux/userSlice";
-import Footer from "../components/footer";
 
+
+// eslint-disable-next-line react/prop-types
 const Login = ({currentUser}) => {
   const [userData, setuserData] = useState({});
   const [loading, setloading] = useState(false);

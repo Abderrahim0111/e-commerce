@@ -18,6 +18,8 @@ const ManageProducts = () => {
     fetchProducts();
   }, [products]);
   const handleDelete = async (productId) => {
+    const confirm = window.confirm("Delete this product?")
+    if(!confirm) return
     try {
       const res = await fetch(`/api/deleteProduct/${productId}`, {
         method: "DELETE",

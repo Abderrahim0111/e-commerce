@@ -85,6 +85,7 @@ const Home = () => {
           <ProductItem product={product} key={index} />
         ))}
       </div>
+      
       <Footer />
     </div>
   );
