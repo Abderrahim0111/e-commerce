@@ -4,6 +4,7 @@ import { loginSuccess } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 import { logedOut } from "../redux/productSlice";
 import Loading from "../components/loading";
+import { api } from "../utils/end";
 
 const Profile = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -15,8 +16,9 @@ const Profile = () => {
   const dispatch = useDispatch();
   const handleDeleteUser = async () => {
     try {
-      const res = await fetch(`/api/deleteUser/${currentUser._id}`, {
+      const res = await fetch(`${api}/deleteUser/${currentUser._id}`, {
         method: "DELETE",
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.error) {
@@ -36,12 +38,13 @@ const Profile = () => {
     setloading(true);
     e.preventDefault();
     try {
-      const res = await fetch(`/api/updateUser/${currentUser._id}`, {
+      const res = await fetch(`${api}/updateUser/${currentUser._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userData),
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.error) {

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ProductItem from "../components/productItem";
 import Loading from "../components/loading";
 import Footer from "../components/footer";
+import { api } from "../utils/end";
 
 const Search = () => {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const Search = () => {
     const fetchProducts = async () => {
       try {
         const searchQuery = urlParams.toString();
-        const res = await fetch(`/api/searchProducts/?${searchQuery}`);
+        const res = await fetch(`${api}/searchProducts/?${searchQuery}`, {credentials: 'include'});
         const data = await res.json();
         if (data.error) {
           setloading(false)

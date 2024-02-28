@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import StartsRating from "./startsRating";
+import { api } from "../utils/end";
 
 const Reviews = ({ product }) => {
   const [rating, setrating] = useState(null);
@@ -28,12 +30,13 @@ const Reviews = ({ product }) => {
     }
     try {
       const dataWithRating = { ...costumerData, rating };
-      const res = await fetch("/api/createReview", {
+      const res = await fetch(`${api}/createReview`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(dataWithRating),
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.error) {
@@ -49,7 +52,7 @@ const Reviews = ({ product }) => {
   useEffect(() => {
     try {
       const fetchReviews = async () => {
-        const res = await fetch(`/api/fetchReviews/${product._id}`);
+        const res = await fetch(`${api}/fetchReviews/${product._id}`, {credentials: 'include'});
         const data = await res.json();
         if (data.error) {
           setloading(false);

@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import Loading from "../components/loading";
 import { Link } from "react-router-dom";
 import OrderItemAdmin from "./orderItemAdmin";
+import { api } from "../utils/end";
 
 const ManageOrders = () => {
   const [orders, setorders] = useState([]);
   const [loading, setloading] = useState(true);
   useEffect(() => {
     const fetchOrders = async () => {
-      const res = await fetch(`/api/fetchAllOrders`);
+      const res = await fetch(`${api}/fetchAllOrders`, {credentials: 'include'});
       const data = await res.json();
       if (data.error) {
         setloading(false);

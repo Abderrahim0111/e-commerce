@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Loading from "../components/loading";
 import OrderItem from "../components/orderItem";
 import { Link } from "react-router-dom";
+import { api } from "../utils/end";
 
 const Myorders = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -10,7 +11,7 @@ const Myorders = () => {
   const [loading, setloading] = useState(true);
   useEffect(() => {
     const fetchOrders = async () => {
-      const res = await fetch(`/api/fetchUserOrders/${currentUser._id}`);
+      const res = await fetch(`${api}/fetchUserOrders/${currentUser._id}`, {credentials: 'include'});
       const data = await res.json();
       if (data.error) {
         setloading(false);

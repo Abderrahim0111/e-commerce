@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Loading from "./loading";
 import { useNavigate } from "react-router-dom";
+import { api } from "../utils/end";
 const OrderItemAdmin = ({ order }) => {
   const [loading, setloading] = useState(false);
   const [status, setstatus] = useState("");
@@ -27,12 +28,13 @@ const OrderItemAdmin = ({ order }) => {
   const handleUpdate = async () => {
     const confirm = window.confirm("Update this order?");
     if (!confirm) return;
-    const res = await fetch(`/api/updateOrder/${order._id}`, {
+    const res = await fetch(`${api}/updateOrder/${order._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ status }),
+      credentials: 'include'
     });
     const data = await res.json();
     if (data.error) {
@@ -42,12 +44,13 @@ const OrderItemAdmin = ({ order }) => {
       data.products.map(async (product) => {
         const productQuantity = product.product.quantity;
         const modifiedQuanity = productQuantity - product.quantity;
-        const res2 = await fetch(`/api/updateQuantity/${product.product._id}`, {
+        const res2 = await fetch(`${api}/updateQuantity/${product.product._id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ modifiedQuanity }),
+          credentials: 'include'
         });
         const data2 = await res2.json();
         return console.log(data2);
@@ -60,8 +63,9 @@ const OrderItemAdmin = ({ order }) => {
     if (!confirm) return;
     setloading(true);
     try {
-      const res = await fetch(`/api/deleteUserOrder/${orderId}`, {
+      const res = await fetch(`${api}/deleteUserOrder/${orderId}`, {
         method: "DELETE",
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.error) {

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import { loginSuccess } from "../redux/userSlice";
+import { api } from "../utils/end";
 
 
 // eslint-disable-next-line react/prop-types
@@ -18,12 +19,13 @@ const Login = ({currentUser}) => {
     e.preventDefault();
     setloading(true)
     try {
-      const res = await fetch('/api/login', {
+      const res = await fetch(`${api}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(userData),
+        credentials: 'include'
       })
       const data = await res.json()
       if(data.error){

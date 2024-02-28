@@ -4,6 +4,7 @@ import Loading from "../components/loading";
 import { useNavigate } from "react-router-dom";
 import CategoryItem from "../components/categoryItem";
 import Footer from "../components/footer";
+import { api } from "../utils/end";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -12,7 +13,7 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("/api/fetchProducts");
+        const res = await fetch(`${api}/fetchProducts`, {credentials: 'include'});
         const data = await res.json();
         if (data.error) {
           console.error(data.error);

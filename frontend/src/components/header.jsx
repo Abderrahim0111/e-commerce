@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginSuccess } from "../redux/userSlice";
 import { logedOut } from "../redux/productSlice";
 import { useEffect, useState } from "react";
+import { api } from "../utils/end";
 
 const Header = ({ currentUser }) => {
   const { products } = useSelector((state) => state.product);
@@ -12,7 +13,7 @@ const Header = ({ currentUser }) => {
   const navigate = useNavigate()
   const handleLogout = async () => {
     try {
-      const res = await fetch("/api/logout");
+      const res = await fetch(`${api}/logout`, {credentials: 'include'});
       const data = await res.json();
       if (data.error) {
         return console.log(data.error);

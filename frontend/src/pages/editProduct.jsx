@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../components/loading";
+import { api } from "../utils/end";
 
 const EditProduct = () => {
   const { productId } = useParams();
@@ -19,9 +20,10 @@ const EditProduct = () => {
       formData.append("images", productData.images[i]);
     }
     try {
-      const res = await fetch("/api/uploadProductImages", {
+      const res = await fetch(`${api}/uploadProductImages`, {
         method: "POST",
         body: formData,
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.error) {
@@ -71,12 +73,13 @@ const EditProduct = () => {
     e.preventDefault();
     if ( productData.images.length > 0 ) {
       try {
-        const res = await fetch(`/api/updateProduct/${productId}`, {
+        const res = await fetch(`${api}/updateProduct/${productId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(productData),
+          credentials: 'include'
         });
         const data = await res.json();
         if (data.error) {
@@ -98,7 +101,7 @@ const EditProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
         try {
-            const res = await fetch(`/api/fetchProduct/${productId}`)
+            const res = await fetch(`${api}/fetchProduct/${productId}`, {credentials: 'include'})
             const data = await res.json()
             if(data.error){
                 return

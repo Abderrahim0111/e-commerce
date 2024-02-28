@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import Loading from "./loading";
 import { Link } from "react-router-dom";
+import { api } from "../utils/end";
 
 const ManageProducts = () => {
   const [loading, setloading] = useState(true);
   const [products, setproducts] = useState([]);
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await fetch("/api/fetchProducts");
+      const res = await fetch(`${api}/fetchProducts`, {credentials: 'include'});
       const data = await res.json();
       if (data.error) {
         return console.log(data.error);
@@ -21,8 +22,9 @@ const ManageProducts = () => {
     const confirm = window.confirm("Delete this product?")
     if(!confirm) return
     try {
-      const res = await fetch(`/api/deleteProduct/${productId}`, {
+      const res = await fetch(`${api}/deleteProduct/${productId}`, {
         method: "DELETE",
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.error) {

@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import { loginSuccess } from "../redux/userSlice";
+import { api } from "../utils/end";
 
+// eslint-disable-next-line react/prop-types
 const Register = ({currentUser}) => {
   const [userData, setuserData] = useState({});
   const [loading, setloading] = useState(false);
@@ -16,12 +18,13 @@ const Register = ({currentUser}) => {
     e.preventDefault();
     setloading(true)
     try {
-      const res = await fetch('/api/register', {
+      const res = await fetch(`${api}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(userData),
+        credentials: 'include'
       })
       const data = await res.json()
       if(data.error){

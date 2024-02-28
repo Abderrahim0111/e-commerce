@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Loading from "./loading";
+import { api } from "../utils/end";
 
 const Summary = () => {
   const [orders, setOrders] = useState([]);
@@ -10,7 +11,7 @@ const Summary = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const ordersRes = await fetch(`/api/fetchAllOrders`);
+        const ordersRes = await fetch(`${api}/fetchAllOrders`, {credentials: 'include'});
         const ordersData = await ordersRes.json();
         if (ordersData.error) {
           setLoading(false);
@@ -19,7 +20,7 @@ const Summary = () => {
         }
         setOrders(ordersData);
 
-        const usersRes = await fetch(`/api/fetchUsers`);
+        const usersRes = await fetch(`${api}/fetchUsers`, {credentials: 'include'});
         const usersData = await usersRes.json();
         if (usersData.error) {
           setLoading(false);
@@ -28,7 +29,7 @@ const Summary = () => {
         }
         setUsers(usersData);
 
-        const productsRes = await fetch(`/api/fetchProducts`);
+        const productsRes = await fetch(`${api}/fetchProducts`, {credentials: 'include'});
         const productsData = await productsRes.json();
         if (productsData.error) {
           setLoading(false);

@@ -1,5 +1,6 @@
 
 
+// eslint-disable-next-line react/prop-types
 const CategoryItem = ({ category, handleCategory, imageURL, categoryName }) => {
   return (
     <div className="flex flex-col items-center gap-5">

@@ -6,6 +6,7 @@ import SelectedProduct from "../components/selectedProduct";
 import Thanks from "../components/thanks";
 import { logedOut } from "../redux/productSlice";
 import Footer from "../components/footer";
+import { api } from "../utils/end";
 
 const Order = () => {
   let subtotal = 0;
@@ -31,12 +32,13 @@ const Order = () => {
     e.preventDefault();
     setloading(true);
     try {
-      const res = await fetch("/api/createOrder", {
+      const res = await fetch(`${api}/createOrder`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(costumerData),
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.error) {

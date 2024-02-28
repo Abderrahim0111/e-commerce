@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../components/loading";
+import { api } from "../utils/end";
 
 const View = () => {
   const { orderId } = useParams();
@@ -23,7 +24,7 @@ const View = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const res = await fetch(`/api/fetchOrder/${orderId}`);
+        const res = await fetch(`${api}/fetchOrder/${orderId}`, {credentials: 'include'});
         const data = await res.json();
         if (data.error) {
           setLoading(false);

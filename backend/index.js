@@ -3,7 +3,11 @@ const app = express();
 app.use(express.json());
 
 const cors = require("cors");
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  methods: ["POST", "GET", "PUT", "DELETE"],
+  credentials: true
+}));
 
 const env = require("dotenv");
 env.config();
@@ -34,5 +38,3 @@ const reviewRouter = require('./routes/reviewRoutes')
 app.use('/api', reviewRouter)
 const orderRouter = require('./routes/orderRoutes')
 app.use('/api', orderRouter)
-
-// final

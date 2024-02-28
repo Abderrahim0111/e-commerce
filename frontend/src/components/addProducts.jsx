@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Loading from "./loading";
 import { useNavigate } from "react-router-dom";
+import { api } from "../utils/end";
 
 const AddProducts = () => {
   const [loadingU, setloadingU] = useState(false);
@@ -56,9 +57,10 @@ const AddProducts = () => {
       formData.append("images", productData.images[i]);
     }
     try {
-      const res = await fetch("/api/uploadProductImages", {
+      const res = await fetch(`${api}/uploadProductImages`, {
         method: "POST",
         body: formData,
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.error) {
@@ -79,12 +81,13 @@ const AddProducts = () => {
     e.preventDefault();
     if (uploadClicked) {
       try {
-        const res = await fetch("/api/createProduct", {
+        const res = await fetch(`${api}/createProduct`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(productData),
+          credentials: 'include'
         });
         const data = await res.json();
         if (data.error) {

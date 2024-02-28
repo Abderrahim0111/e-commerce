@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import Loading from "./loading";
+import { api } from "../utils/end";
 
 const OrderItem = ({ order }) => {
     const [loading, setloading] = useState(false);
@@ -21,8 +23,9 @@ const OrderItem = ({ order }) => {
   const handleDelete = async (orderId) => {
     setloading(true)
     try {
-      const res = await fetch(`/api/deleteUserOrder/${orderId}`, {
+      const res = await fetch(`${api}/deleteUserOrder/${orderId}`, {
         method: "DELETE",
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.error) {

@@ -10,6 +10,7 @@ import {
 import Reviews from "../components/reviews";
 import ProductItem from "../components/productItem";
 import Footer from "../components/footer";
+import { api } from "../utils/end";
 
 const Product = () => {
   const [similarProducts, setsimilarProducts] = useState([]);
@@ -31,7 +32,7 @@ const Product = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`/api/fetchProduct/${productId}`);
+        const res = await fetch(`${api}/fetchProduct/${productId}`, {credentials: 'include'});
         const data = await res.json();
         if (data.error) {
           setloadingF(false);
@@ -49,7 +50,7 @@ const Product = () => {
 
     const fetchSimilarProducts = async () => {
       try {
-        const res = await fetch(`/api/fetchSimilarProducts/${productId}`);
+        const res = await fetch(`${api}/fetchSimilarProducts/${productId}`, {credentials: 'include'});
         const data = await res.json();
         if (data.error) {
           return console.log(data.error);
@@ -64,7 +65,7 @@ const Product = () => {
   useEffect(() => {
     try {
       const fetchReviews = async () => {
-        const res = await fetch(`/api/fetchReviews/${productId}`);
+        const res = await fetch(`${api}/fetchReviews/${productId}`, {credentials: 'include'});
         const data = await res.json();
         if (data.error) {
           return console.log(data.error);

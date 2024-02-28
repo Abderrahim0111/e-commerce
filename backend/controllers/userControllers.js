@@ -19,7 +19,12 @@ const register = async (req, res) => {
     const user = await User.create(req.body);
     const { password: pass, ...rest } = user._doc;
     const token = jwt.sign({ id: rest._id }, process.env.JWT);
-    res.cookie("jwt", token, { httpOnly: true });
+    res.cookie("jwt", token, { 
+      httpOnly: true, 
+      maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year in milliseconds 
+      secure: true, // Set the secure attribute
+      sameSite: 'none' // Allow cross-site cookies
+    });
     res.json(rest);
   } catch (error) {
     res.json({ error: error });
@@ -42,7 +47,12 @@ const login = async (req, res) => {
     }
     const { password: pass, ...rest } = isUser._doc;
     const token = jwt.sign({ id: rest._id }, process.env.JWT);
-    res.cookie("jwt", token, { httpOnly: true });
+    res.cookie("jwt", token, { 
+      httpOnly: true, 
+      maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year in milliseconds 
+      secure: true, // Set the secure attribute
+      sameSite: 'none' // Allow cross-site cookies
+    });
     res.json(rest);
   } catch (error) {
     res.json({ error: error });
