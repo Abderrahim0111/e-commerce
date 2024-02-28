@@ -15,6 +15,8 @@ const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleDeleteUser = async () => {
+    const confirm = window.confirm("Are you sure you want to delete your account?")
+    if(!confirm) return
     try {
       const res = await fetch(`${api}/deleteUser/${currentUser._id}`, {
         method: "DELETE",

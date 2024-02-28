@@ -1,1 +1,1 @@
-export const api = "gdfggdf"
+export const api = "https://boutiquti-api.vercel.app/api"
