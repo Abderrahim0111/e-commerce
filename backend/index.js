@@ -4,7 +4,7 @@ app.use(express.json());
 
 const cors = require("cors");
 app.use(cors({
-  origin: "*",
+  origin: "https://boutiquti.vercel.app",
   methods: ["POST", "GET", "PUT", "DELETE"],
   credentials: true
 }));
